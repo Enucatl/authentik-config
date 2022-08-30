@@ -56,16 +56,16 @@ services:
     labels:
       - "traefik.enable=true"
       ## HTTP Routers
-      - "traefik.http.routers.authentik-rtr.rule=Host(`authentik.nuc10i7fnh.home.arpa`)"
-      - "traefik.http.routers.authentik-rtr.entrypoints=https"
-      - "traefik.http.routers.authentik-rtr.tls=true"
+      - "traefik.http.routers.authentik.rule=Host(`authentik.nuc10i7fnh.home.arpa`)"
+      - "traefik.http.routers.authentik.entrypoints=https"
+      - "traefik.http.routers.authentik.tls=true"
       ## Individual Application forwardAuth regex (catch any subdomain using individual application forwardAuth)  
-      - "traefik.http.routers.authentik-rtr-outpost.rule=HostRegexp(`{subdomain:[a-z0-9-]+}.nuc10i7fnh.home.arpa`) && PathPrefix(`/outpost.goauthentik.io/`)"
-      - "traefik.http.routers.authentik-rtr-outpost.entrypoints=https"
-      - "traefik.http.routers.authentik-rtr-outpost.tls=true"
+      - "traefik.http.routers.authentik-outpost.rule=HostRegexp(`{subdomain:[a-z0-9-]+}.nuc10i7fnh.home.arpa`) && PathPrefix(`/outpost.goauthentik.io/`)"
+      - "traefik.http.routers.authentik-outpost.entrypoints=https"
+      - "traefik.http.routers.authentik-outpost.tls=true"
       ## HTTP Services
-      - "traefik.http.routers.authentik-rtr.service=authentik-svc"
-      - "traefik.http.services.authentik-svc.loadBalancer.server.port=9000"
+      - "traefik.http.routers.authentik.service=authentik"
+      - "traefik.http.services.authentik.loadBalancer.server.port=9000"
 
   worker:
     image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2022.8.2}
