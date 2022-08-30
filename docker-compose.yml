@@ -43,7 +43,8 @@ services:
       AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
       AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
       AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
-      # AUTHENTIK_ERROR_REPORTING__ENABLED: "true"
+      AUTHENTIK_ERROR_REPORTING__ENABLED: "true"
+      AUTHENTIK_SECRET_KEY:
       # WORKERS: 2
     volumes:
       - media:/media
