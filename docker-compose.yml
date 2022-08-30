@@ -13,7 +13,7 @@ services:
       retries: 5
       timeout: 5s
     networks:
-      - traefik
+      - traefik_proxy
     volumes:
       - database:/var/lib/postgresql/data
     environment:
@@ -31,7 +31,7 @@ services:
       retries: 5
       timeout: 3s
     networks:
-      - traefik
+      - traefik_proxy
 
   authentik_server:
     image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2022.8.2}
@@ -52,7 +52,7 @@ services:
       - "0.0.0.0:${AUTHENTIK_PORT_HTTP:-9000}:9000"
       - "0.0.0.0:${AUTHENTIK_PORT_HTTPS:-9443}:9443"
     networks:
-      - traefik
+      - traefik_proxy
     labels:
       - "traefik.enable=true"
       ## HTTP Routers
@@ -85,7 +85,7 @@ services:
     volumes:
       - media:/media
     networks:
-      - traefik
+      - traefik_proxy
 
 volumes:
   database:
