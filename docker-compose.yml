@@ -17,9 +17,9 @@ services:
     volumes:
       - database:/var/lib/postgresql/data
     environment:
-      - POSTGRES_PASSWORD=${PG_PASS:?database password required}
-      - POSTGRES_USER=${PG_USER:-authentik}
-      - POSTGRES_DB=${PG_DB:-authentik}
+      - POSTGRES_PASSWORD=${AUTHENTIK_POSTGRESQL__PASSWORD}
+      - POSTGRES_USER=${AUTHENTIK_POSTGRESQL__USER}
+      - POSTGRES_DB=${AUTHENTIK_POSTGRESQL__NAME}
 
   redis:
     image: redis:alpine
@@ -38,14 +38,20 @@ services:
     restart: unless-stopped
     command: server
     environment:
-      AUTHENTIK_REDIS__HOST: redis
-      AUTHENTIK_POSTGRESQL__HOST: postgresql
-      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
-      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
-      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
-      AUTHENTIK_ERROR_REPORTING__ENABLED:
-      AUTHENTIK_SECRET_KEY:
-      # WORKERS: 2
+      - AUTHENTIK_REDIS__HOST=redis
+      - AUTHENTIK_POSTGRESQL__HOST=postgresql
+      - AUTHENTIK_ERROR_REPORTING__ENABLED
+      - AUTHENTIK_SECRET_KEY
+      - AUTHENTIK_EMAIL__HOST
+      - AUTHENTIK_EMAIL__PORT
+      - AUTHENTIK_EMAIL__FROM
+      - AUTHENTIK_DISABLE_UPDATE_CHECK
+      - AUTHENTIK_ERROR_REPORTING__ENABLED
+      - AUTHENTIK_DISABLE_STARTUP_ANALYTICS
+      - AUTHENTIK_AVATARS
+      - AUTHENTIK_POSTGRESQL__USER
+      - AUTHENTIK_POSTGRESQL__NAME
+      - AUTHENTIK_POSTGRESQL__PASSWORD
     volumes:
       - media:/media
       - custom-templates:/templates
@@ -73,13 +79,20 @@ services:
     restart: unless-stopped
     command: worker
     environment:
-      AUTHENTIK_REDIS__HOST: redis
-      AUTHENTIK_POSTGRESQL__HOST: postgresql
-      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
-      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
-      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
-      AUTHENTIK_ERROR_REPORTING__ENABLED:
-      AUTHENTIK_SECRET_KEY:
+      - AUTHENTIK_REDIS__HOST=redis
+      - AUTHENTIK_POSTGRESQL__HOST=postgresql
+      - AUTHENTIK_ERROR_REPORTING__ENABLED
+      - AUTHENTIK_SECRET_KEY
+      - AUTHENTIK_EMAIL__HOST
+      - AUTHENTIK_EMAIL__PORT
+      - AUTHENTIK_EMAIL__FROM
+      - AUTHENTIK_DISABLE_UPDATE_CHECK
+      - AUTHENTIK_ERROR_REPORTING__ENABLED
+      - AUTHENTIK_DISABLE_STARTUP_ANALYTICS
+      - AUTHENTIK_AVATARS
+      - AUTHENTIK_POSTGRESQL__USER
+      - AUTHENTIK_POSTGRESQL__NAME
+      - AUTHENTIK_POSTGRESQL__PASSWORD
     # This is optional, and can be removed. If you remove this, the following will happen
     # - The permissions for the /media folders aren't fixed, so make sure they are 1000:1000
     # - The docker socket can't be accessed anymore
