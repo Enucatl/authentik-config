@@ -100,6 +100,18 @@ services:
     networks:
       - traefik_proxy
 
+  ldap:
+    image: ghcr.io/goauthentik/ldap
+    networks:
+       - traefik_proxy
+    ports:
+        - 389:3389
+        - 636:6636
+    environment:
+      - AUTHENTIK_HOST=server
+      - AUTHENTIK_INSECURE=false
+      - AUTHENTIK_TOKEN
+
 volumes:
   database:
   media:
