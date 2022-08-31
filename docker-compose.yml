@@ -110,7 +110,7 @@ services:
         - 636:6636
     environment:
       - AUTHENTIK_HOST=https://authentik.nuc10i7fnh.home.arpa
-      - AUTHENTIK_INSECURE=false
+      - AUTHENTIK_INSECURE=true
       - AUTHENTIK_TOKEN
 
 volumes:
