@@ -111,6 +111,7 @@ services:
     environment:
       - AUTHENTIK_HOST=https://authentik.nuc10i7fnh.home.arpa
       - AUTHENTIK_INSECURE=true
+      - AUTHENTIK_DEBUG=true
       - AUTHENTIK_TOKEN
 
 volumes:
