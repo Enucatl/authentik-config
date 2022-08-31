@@ -97,7 +97,8 @@ services:
     #user: root
     volumes:
       - media:/media
-      - /home/user/docker/traefik/data/certs/authentik.nuc10i7fnh.home.arpa/:/certs/authentik.nuc10i7fnh.home.arpa
+      - /home/user/docker/traefik/data/certs/authentik.nuc10i7fnh.home.arpa/:/certs/authentik.nuc10i7fnh.home.arpa:ro
+      - /home/user/docker/traefik/data/certs/nuc10i7fnh.home.arpa/:/certs/nuc10i7fnh.home.arpa:ro
     networks:
       - traefik_proxy
 
