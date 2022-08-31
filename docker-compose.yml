@@ -106,11 +106,11 @@ services:
     networks:
        - traefik_proxy
     ports:
-        - 389:3389
+        #- 389:3389
         - 636:6636
     environment:
       - AUTHENTIK_HOST=https://authentik.nuc10i7fnh.home.arpa
-      - AUTHENTIK_INSECURE=true
+      - AUTHENTIK_INSECURE=false
       - AUTHENTIK_TOKEN
 
 volumes:
