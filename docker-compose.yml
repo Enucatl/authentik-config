@@ -69,7 +69,6 @@ services:
       ## Individual Application forwardAuth regex (catch any subdomain using individual application forwardAuth)  
       - "traefik.http.routers.authentik-outpost.rule=HostRegexp(`{subdomain:[a-z0-9-]+}.nuc10i7fnh.home.arpa`) && PathPrefix(`/outpost.goauthentik.io/`)"
       - "traefik.http.routers.authentik-outpost.entrypoints=https"
-      - "traefik.http.routers.authentik-outpost.middlewares=secured@file"
       - "traefik.http.routers.authentik-outpost.tls=true"
       ## HTTP Services
       - "traefik.http.routers.authentik.service=authentik"
