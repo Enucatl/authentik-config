@@ -38,6 +38,7 @@ services:
     restart: unless-stopped
     command: server
     environment:
+      - WORKERS=1
       - AUTHENTIK_REDIS__HOST
       - AUTHENTIK_POSTGRESQL__HOST
       - AUTHENTIK_ERROR_REPORTING__ENABLED
@@ -91,10 +92,6 @@ services:
       - AUTHENTIK_POSTGRESQL__USER
       - AUTHENTIK_POSTGRESQL__NAME
       - AUTHENTIK_POSTGRESQL__PASSWORD
-    # This is optional, and can be removed. If you remove this, the following will happen
-    # - The permissions for the /media folders aren't fixed, so make sure they are 1000:1000
-    # - The docker socket can't be accessed anymore
-    #user: root
     volumes:
       - media:/media
       - /home/user/docker/traefik/data/certs/authentik.nuc10i7fnh.home.arpa/:/certs/authentik.nuc10i7fnh.home.arpa:ro
@@ -107,7 +104,6 @@ services:
     networks:
        - traefik_proxy
     ports:
-        #- 389:3389
         - 636:6636
     environment:
       - AUTHENTIK_HOST=https://authentik.nuc10i7fnh.home.arpa
@@ -126,9 +122,11 @@ services:
       - AUTHENTIK_POSTGRESQL__PASSWORD
       - AUTHENTIK_SECRET_KEY
       - AUTHENTIK_ERROR_REPORTING__ENABLED
-      # WORKERS: 2
+      - WORKERS=1
     ports:
       - "0.0.0.0:${AUTHENTIK_PORT_HTTP:-9001}:9000"
+    networks:
+       - traefik_proxy
 
 volumes:
   database:
