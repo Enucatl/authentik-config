@@ -3,6 +3,21 @@ version: '3.4'
 
 services:
 
+  flower:
+    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2022.8.2}
+    restart: unless-stopped
+    command: worker-status
+    environment:
+      - AUTHENTIK_REDIS__HOST=redis
+      - AUTHENTIK_POSTGRESQL__HOST=postgresql
+      - AUTHENTIK_POSTGRESQL__USER
+      - AUTHENTIK_POSTGRESQL__NAME
+      - AUTHENTIK_POSTGRESQL__PASSWORD
+      # AUTHENTIK_ERROR_REPORTING__ENABLED: "true"
+      # WORKERS: 2
+    ports:
+      - "0.0.0.0:${AUTHENTIK_PORT_HTTP:-9001}:9000"
+
   postgresql:
     image: postgres:12-alpine
     restart: unless-stopped
